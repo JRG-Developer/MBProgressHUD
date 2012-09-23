@@ -98,6 +98,40 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 #pragma mark - Class methods
 
++ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated {
+    return [self showHUDAddedTo:[[UIApplication sharedApplication] keyWindow] animated:animated];
+}
+
++ (MBProgressHUD *)HUDForKeyWindow {
+    return [self HUDForView:[[UIApplication sharedApplication] keyWindow]];
+}
+
++ (BOOL)hideHUDForKeyWindowAnimated:(BOOL)animated {
+    
+    if (![self hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:animated])
+    {
+        // if keyWindow has changed, we loop through the windows until we have a hud that gets hidden
+        
+        for (UIWindow *window in [[UIApplication sharedApplication] windows])
+        {
+            if ([self hideHUDForView:window animated:animated])
+                return YES;
+        }
+        
+        return NO;
+    }
+    return YES;
+}
+
++ (NSUInteger)hideAllHudsForAllWindows:(BOOL)animated {
+    NSUInteger count = 0;
+    
+    for (UIWindow *window in [[UIApplication sharedApplication] windows])
+        count += [self hideAllHUDsForView:window animated:animated];
+    
+    return count;
+}
+
 + (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
 	MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
 	[view addSubview:hud];
@@ -414,9 +448,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 #if !__has_feature(objc_arc)
 	[targetForExecution release];
 	[objectForExecution release];
-#else
-	targetForExecution = nil;
-	objectForExecution = nil;
 #endif
 	[self hide:useAnimation];
 }
