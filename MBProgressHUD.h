@@ -113,6 +113,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 
 + (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated;
++ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector;
 + (MBProgressHUD *)HUDForKeyWindow;
 + (BOOL)hideHUDForKeyWindowAnimated:(BOOL)animated;
 + (NSUInteger)hideAllHudsForAllWindows:(BOOL)animated;
