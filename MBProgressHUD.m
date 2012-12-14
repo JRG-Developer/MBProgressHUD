@@ -99,10 +99,10 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 #pragma mark - Class methods
 
 + (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated {
-    return [self showHUDAddedToKeyWindowAnimated:animated target:nil selector:nil];
+    return [self showHUDAddedToKeyWindowAnimated:animated target:nil selector:nil relatedObject:nil];
 }
 
-+ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector
++ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject
 {
     MBProgressHUD *hud = [self showHUDAddedTo:[[UIApplication sharedApplication] keyWindow] animated:animated];
     
@@ -111,6 +111,12 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:selector];
         [hud addGestureRecognizer:tapGesture];
     }
+    
+    if (relatedObject)
+    {
+        hud.relatedObject = relatedObject;
+    }
+    
     return hud;
 }
 

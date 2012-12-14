@@ -113,7 +113,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 
 + (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated;
-+ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector;
++ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject;
 + (MBProgressHUD *)HUDForKeyWindow;
 + (BOOL)hideHUDForKeyWindowAnimated:(BOOL)animated;
 + (NSUInteger)hideAllHudsForAllWindows:(BOOL)animated;
@@ -415,6 +415,12 @@ typedef void (^MBProgressHUDCompletionBlock)();
  * Force the HUD dimensions to be equal if possible. 
  */
 @property (atomic, assign, getter = isSquare) BOOL square;
+
+/*
+ * Related Object - useful for example to cancel a request, see the method signature showHUDAddedToKeyWindowAnimated:target:selector:relatedObject:
+ */
+
+@property (nonatomic, weak) id relatedObject;
 
 @end
 
