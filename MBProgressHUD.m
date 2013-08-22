@@ -100,8 +100,12 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 + (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated {
 
-    [MBProgressHUD hideHUDForKeyWindowAnimated:NO];
-    return [self showHUDAddedTo:[[UIApplication sharedApplication] keyWindow] animated:animated];
+    MBProgressHUD *hud = [MBProgressHUD HUDForKeyWindow];
+
+    if (!hud)
+        return [self showHUDAddedTo:[[UIApplication sharedApplication] keyWindow] animated:animated];
+    
+    return hud;
 }
 
 + (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject
