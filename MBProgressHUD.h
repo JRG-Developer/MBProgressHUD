@@ -103,20 +103,13 @@ typedef void (^MBProgressHUDCompletionBlock)();
 @interface MBProgressHUD : UIView
 
 /**
- * Convenience methods to get, add, and hide HUD on the key Window
- *
- * @see showHUDForView:animated
- * @see hideHUDForView:animated:
- * @see HUDForView:
- * @see animationType
+ * Convenience methods to hide all huds
  *
  */
++ (NSUInteger)hideAllHudsForAllWindowsAnimated:(BOOL)animated;
 
-+ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated;
-+ (MBProgressHUD *)showHUDAddedToKeyWindowAnimated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject;
-+ (MBProgressHUD *)HUDForKeyWindow;
-+ (BOOL)hideHUDForKeyWindowAnimated:(BOOL)animated;
-+ (NSUInteger)hideAllHudsForAllWindows:(BOOL)animated;
+
++ (MBProgressHUD *)showHUDAddedToView:(UIView *)view animated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject;
 
 /**
  * Creates a new HUD, adds it to provided view and shows it. The counterpart to this method is hideHUDForView:animated:.
