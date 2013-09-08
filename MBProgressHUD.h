@@ -282,7 +282,7 @@ typedef void (^MBProgressHUDCompletionBlock)();
  *
  * @see MBProgressHUDMode
  */
-@property (atomic, assign) MBProgressHUDMode mode;
+@property (nonatomic, assign) MBProgressHUDMode mode UI_APPEARANCE_SELECTOR;
 
 /**
  * The animation type that should be used when the HUD is shown and hidden. 
@@ -295,10 +295,10 @@ typedef void (^MBProgressHUDCompletionBlock)();
  * The UIView (e.g., a UIImageView) to be shown when the HUD is in MBProgressHUDModeCustomView.
  * For best results use a 37 by 37 pixel view (so the bounds match the built in indicator bounds). 
  */
-@property (atomic, MB_STRONG) UIView *customView;
+@property (atomic, MB_STRONG) UIView *customView UI_APPEARANCE_SELECTOR;
 
 /** 
- * The HUD delegate object. 
+ * The HUD delegate object.
  *
  * @see MBProgressHUDDelegate
  */

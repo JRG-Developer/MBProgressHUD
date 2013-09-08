@@ -187,7 +187,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	if (self) {
 		// Set default values for properties
 		self.animationType = MBProgressHUDAnimationFade;
-		self.mode = MBProgressHUDModeIndeterminate;
+        self.mode = [[[self class] appearance] mode];
+        self.customView = [[[self class] appearance] customView];
 		self.labelText = nil;
 		self.detailsLabelText = nil;
 		self.opacity = 0.8f;
@@ -507,7 +508,13 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		// Update custom view indicator
 		[indicator removeFromSuperview];
 		self.indicator = customView;
-		[self addSubview:indicator];
+        [self addSubview:indicator];
+        
+        if ([customView isKindOfClass:[UIImageView class]] && [[(UIImageView *)customView animationImages] count])
+        {
+            [(UIImageView *) customView startAnimating];
+        }
+        
 	} else if (mode == MBProgressHUDModeText) {
 		[indicator removeFromSuperview];
 		self.indicator = nil;
