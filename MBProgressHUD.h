@@ -108,8 +108,9 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 + (NSUInteger)hideAllHudsForAllWindowsAnimated:(BOOL)animated;
 
++ (MBProgressHUD *)showHUDAddedToView:(UIView *)view animated:(BOOL)animated target:(id)target action:(SEL)selector relatedObject:(id)relatedObject;
 
-+ (MBProgressHUD *)showHUDAddedToView:(UIView *)view animated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject;
+- (void)addTarget:(id)target action:(SEL)action relatedObject:(id)relatedObject;
 
 /**
  * Creates a new HUD, adds it to provided view and shows it. The counterpart to this method is hideHUDForView:animated:.

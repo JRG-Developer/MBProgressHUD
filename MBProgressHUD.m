@@ -98,22 +98,25 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 #pragma mark - Class methods
 
-+ (MBProgressHUD *)showHUDAddedToView:(UIView *)view animated:(BOOL)animated target:(id)target selector:(SEL)selector relatedObject:(id)relatedObject
-{
++ (MBProgressHUD *)showHUDAddedToView:(UIView *)view animated:(BOOL)animated target:(id)target action:(SEL)action relatedObject:(id)relatedObject
+{    
     MBProgressHUD *hud = [self showHUDAddedTo:view animated:animated];
-    
-    if (target && selector)
+    [hud addTarget:target action:action relatedObject:relatedObject];
+    return hud;
+}
+
+- (void)addTarget:(id)target action:(SEL)action relatedObject:(id)relatedObject
+{
+    if (target && action)
     {
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:selector];
-        [hud addGestureRecognizer:tapGesture];
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+        [self addGestureRecognizer:tapGesture];
     }
     
     if (relatedObject)
     {
-        hud.relatedObject = relatedObject;
+        self.relatedObject = relatedObject;
     }
-    
-    return hud;
 }
 
 + (NSUInteger)hideAllHudsForAllWindowsAnimated:(BOOL)animated {
