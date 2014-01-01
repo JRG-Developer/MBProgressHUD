@@ -120,12 +120,18 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 }
 
 + (NSUInteger)hideAllHudsForAllWindowsAnimated:(BOOL)animated {
-    NSUInteger count = 0;
+    
+    NSUInteger counter = 0;
     
     for (UIWindow *window in [[UIApplication sharedApplication] windows])
-        count += [self hideAllHUDsForView:window animated:animated];
+    {
+        for (UIView *view in window.subviews)
+        {
+            counter += [self hideAllHUDsForView:view animated:animated];
+        }
+    }
     
-    return count;
+    return counter;
 }
 
 + (MBProgressHUD *)showHUDAddedTo:(UIView *)view animated:(BOOL)animated {
