@@ -125,10 +125,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     
     for (UIWindow *window in [[UIApplication sharedApplication] windows])
     {
-        for (UIView *view in window.subviews)
-        {
-            counter += [self hideAllHUDsForView:view animated:animated];
-        }
+        [self hideAllHUDsForView:window animated:animated];
     }
     
     return counter;
@@ -178,15 +175,16 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 }
 
 + (NSArray *)allHUDsForView:(UIView *)view {
-	NSMutableArray *huds = [NSMutableArray array];
-	NSArray *subviews = view.subviews;
 	Class hudClass = [MBProgressHUD class];
-	for (UIView *aView in subviews) {
-		if ([aView isKindOfClass:hudClass]) {
-			[huds addObject:aView];
-		}
-	}
-	return [NSArray arrayWithArray:huds];
+    if ([view isKindOfClass:hudClass])
+        return @[view];
+    NSMutableArray *huds = [NSMutableArray array];
+    NSArray *subviews = view.subviews;
+    for (UIView *aView in subviews) {
+        [huds addObjectsFromArray:[self allHUDsForView:aView]];
+    }
+    
+    return [huds copy];
 }
 
 #pragma mark - Lifecycle
