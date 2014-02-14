@@ -5,7 +5,7 @@
 //
 
 #import "MBProgressHUD.h"
-
+#import <AFNetworking/AFHTTPRequestOperation.h>
 
 #if __has_feature(objc_arc)
 	#define MB_AUTORELEASE(exp) exp
@@ -767,6 +767,40 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	if (animated) {
 		[UIView commitAnimations];
 	}
+}
+
+#pragma mark - Cancel
+
++ (MBProgressHUD *)showCancelableHUDAddedToView:(UIView *)view
+                                       animated:(BOOL)animated
+                                      operation:(AFHTTPRequestOperation *)operation
+                                 startOperation:(BOOL)startOperation
+{
+    MBProgressHUD * hud = [self showHUDAddedTo:view animated:animated];
+    [hud setLabelText:AOLoadingCancelableMessage];
+    
+    hud.relatedObject = operation;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:hud action:@selector(cancelOperation)];
+    [hud addGestureRecognizer:tapGesture];
+    
+    if (startOperation)
+        [operation start];
+    
+    return hud;
+}
+
+- (void)cancelOperation
+{
+    if (!self.relatedObject)
+        return;
+    
+    if ([self.relatedObject respondsToSelector:@selector(cancel)])
+        [self.relatedObject performSelector:@selector(cancel)];
+    
+    [self setRelatedObject:nil];
+    
+    [self setRemoveFromSuperViewOnHide:YES];
+    [self hide:YES];
 }
 
 @end

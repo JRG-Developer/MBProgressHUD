@@ -30,8 +30,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@protocol MBProgressHUDDelegate;
+@class AFHTTPRequestOperation;
 
+@protocol MBProgressHUDDelegate;
 
 typedef enum {
 	/** Progress is shown using an UIActivityIndicatorView. This is the default. */
@@ -415,6 +416,17 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 
 @property (nonatomic, weak) id relatedObject;
+
+
+/*
+ * Cancel progress HUD.
+ */
+
++ (MBProgressHUD *)showCancelableHUDAddedToView:(UIView *)view
+                                       animated:(BOOL)animated
+                                      operation:(AFHTTPRequestOperation *)operation
+                                 startOperation:(BOOL)startOperation;
+- (void)cancelOperation;
 
 @end
 
