@@ -194,7 +194,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	if (self) {
 		// Set default values for properties
 		self.animationType = MBProgressHUDAnimationFade;
-        self.mode = [[[self class] appearance] mode];
+        self.mode = [[MBProgressHUD appearance] mode];
         self.customView = [[[self class] appearance] customView];
 		self.labelText = nil;
 		self.detailsLabelText = nil;
